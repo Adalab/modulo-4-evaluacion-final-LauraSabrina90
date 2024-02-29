@@ -2,6 +2,8 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
+const connectDb = require('./config/myConnection.js');
+
 
 //ARRANCAR SERVIDOR
 const myServer = express();
@@ -12,9 +14,7 @@ myServer.use(cors());
 myServer.use(express.json( { limit: '25mb ' }));
 
 //CONEXIÓN BD
-async function connectDB() {
-    const connection 
-}
+connectDb();
 
 //ESCUCHAR SERVIDOR
 const myPort = process.env.PORT || 3306;
