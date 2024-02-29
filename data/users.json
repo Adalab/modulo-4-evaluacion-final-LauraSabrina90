@@ -1,0 +1,21 @@
+
+[
+    {
+    "_id": "65e0d911de0089a18d2241b0"
+    ,
+    "email": "Marcus@marcus.com",
+    "name": "Marcus Travolta",
+    "adress": "13, Elm Street",
+    "password": "marcus123"
+  },
+
+
+{
+    "_id": "65e0da4ade0089a18d2241b3"
+    ,
+    "email": "paola@paola.com",
+    "name": "Paola Vin Diesel",
+    "adress": "24, Springfield Avenue",
+    "password": "paola123"
+  }
+]

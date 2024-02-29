@@ -1,0 +1,38 @@
+[
+    {
+        "_id": "65e0d898de0089a18d2241ad",
+        "month": "January",
+        "bills": "2700",
+        "groceries": "120",
+        "gym": "20",
+        "luxuries": "95",
+        "rent": "550",
+        "restaurants": "80",
+        "self-care": "90",
+        "transport": "50"
+      },
+      {
+        "_id": "65e0d8c0de0089a18d2241ae",
+        "month": "February",
+        "bills": "150",
+        "groceries": "250",
+        "gym": "70",
+        "luxuries": "82",
+        "rent": "350",
+        "restaurants": "110",
+        "self-care": "40",
+        "transport": "70"
+      },
+      {
+        "_id": "65e0d8d5de0089a18d2241af",
+        "month": "March",
+        "bills": "156",
+        "groceries": "200",
+        "gym": "0",
+        "luxuries": "150",
+        "rent": "350",
+        "restaurants": "100",
+        "self-care": "20",
+        "transport": "70"
+      }
+]
