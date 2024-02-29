@@ -2,7 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
-const connectDb = require('./config/myConnection.js');
+const connectDb = require('./config/myConnection');
 
 
 //ARRANCAR SERVIDOR
