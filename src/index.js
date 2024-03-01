@@ -1,14 +1,12 @@
 //DEPENDENCIAS:
-const express = require('express');
-const cors = require('cors');
-require('dotenv').config();
-const connectDb = require('./config/myConnection');
-const Expenses = require('./models/expenses.models')
-
+const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
+const connectDb = require("../config/myConnection");
+const Expenses = require("./models/expenses.models");
 
 //ARRANCAR SERVIDOR
 const myServer = express();
-
 
 //CONFIGURAR SERVIDOR
 myServer.use(cors());
@@ -20,72 +18,64 @@ connectDb();
 //ESCUCHAR SERVIDOR
 const myPort = process.env.PORT || 3306;
 myServer.listen(myPort, () => {
-    console.log(`Thanks Gandalf my server is live at http://localhost:${myPort}/`);
+  console.log(
+    `Thanks Gandalf my server is live at http://localhost:${myPort}/`
+  );
 });
-
 
 //para los endpoints, con mongoDB hay que definir estructuras de datos por cada una de las colecciones a las que quiero acceder --> modelos
 
-//Insertar un registro en su entidad principal.
-    myServer.post('/addExpenses', async (req, res) => {
-        console.log(req.body);
-        try {
-            const newExpense = await Expense.create(req.body);
-            console.log(newExpense.month);
-            res.json(newExpense);
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ message: "Internal server error" });
-        }
-    });
-    myServer.post('/addExpenses', async (req, res) => {
-    console.log(req.body);
-    try {
-        const newExpense = await Expense.create(req.body);
-        console.log(newExpense.month);
-        res.json(newExpense);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Internal server error" });
-    }
-});
-
 //Leer/Listar todos los registros existentes.
-myServer.get('/getExpenses', async (req, res) => {
-    const result = await Expenses.find();
-    res.json(result);
-    console.log(result);
-
+myServer.get("/getExpenses", async (req, res) => {
+  console.log(myExpenses);
+  const myExpenses = await Expenses.find();
+  res.status(200).json({ message: "Todos los gastos existentes", myExpenses });
 });
 
+//Insertar un registro en su entidad principal.
+myServer.post("/createExpense", async (req, res) => {
+  const newExpenses = await Expenses.create(req.body);
+
+  try {
+    res
+      .status(200)
+      .json({ message: "Se han añadido nuevos gastos", newExpenses });
+  } catch (e) {
+    res.status(500).json({
+      message: "Error interno al crear los nuevos gastos",
+      e: error.message,
+    });
+  }
+});
 
 //Leer registros filtrado por el campo de tu interés.
 
-
 //Actualizar un registro existente.
- myServer.put('/updateExpenses', (req, res) => {
-  Person.findOneAndUpdate(
-    { name: 'pedro' },
-    { $set: { name: 'Naomi' } },
-    { new: true }
-  )
-    .then((doc) => {
-      res.json(doc);
-    })
-    .catch((error) => {
-      console.log(error);
+myServer.put("/updateOneExpense", async (req, res) => {
+  try {
+    const filter = { _id: req.body.id };
+    const updateData = req.body.updateData;
+
+    const updateExpense = await Expenses.findOneAndUpdate(filter, updateData, {
+      new: true,
     });
+
+    if (updateExpense) {
+      return res.status(200).json({
+        message: "Gasto actualizado",
+        updateExpense,
+      });
+    } else {
+      return res.status(404).json({
+        message: "No se encontraron gastos que coincidan para actualizar",
+      });
+    }
+  } catch (e) {
+    return res.status(500).json({
+      message: "Error interno al actualizar los gastos",
+      e: error.message,
+    });
+  }
 });
 
 //Eliminar un registro existente.
-
-myServer.delete('/delete', (req, res) => {
-    Expenses.deleteOne({ 'luxuries' : '50' })
-      .then((data) => {
-        console.log('Delete Docs : ', docs);
-        res.json(docs);
-      })
-      .catch((err) => {
-        console.log('Ha ocurrido un error en la información' + err);
-      });
-  });
