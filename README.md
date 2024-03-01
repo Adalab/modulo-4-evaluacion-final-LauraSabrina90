@@ -34,8 +34,11 @@ The idea is to help people who become independant to control the money and check
 
 **DOCUMENT LANGUAGES:** JAVASCRIPT, JSON
 
+# DEPENDENCIES YOU SHOULD INSTALL:
 
+To run the project you will need to run the command and install the following dependencies (do not forget to check your package.json file):
 
+npm install express node nodemon mongoose dotenv cors 
 
 ## Documentation
 
