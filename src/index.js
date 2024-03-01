@@ -23,7 +23,6 @@ myServer.get("/getExpenses", async (req, res) => {
   res.status(200).json({ message: "Todos los gastos existentes", myExpenses });
 });
 
-//Insertar un registro en su entidad principal.
 myServer.post("/createExpense", async (req, res) => {
   const newExpenses = await Expenses.create(req.body);
 
@@ -40,6 +39,35 @@ myServer.post("/createExpense", async (req, res) => {
 });
 
 //Leer registros filtrado por el campo de tu interés.
+myServer.get('/filterExpenses/:_id', async (req, res) =>{
+
+try {
+const { id } = req.params;
+const mongoQuery = await Expenses.findOne({_id: id });
+
+if(mongoQuery) {
+return res.status(200).json({
+  message: "Hay una coincidencia para esta búsqueda",
+  mongoQuery,
+});
+
+} else {
+  return res.status(404).json({
+    message: "No se encontraron resultados con esta búsqueda",
+  });
+}
+
+} catch (error) {
+  return res.status(500).json({
+    message: "Error interno al filtrar los resultados",
+    error: error.message,
+  });
+
+}
+});
+
+
+
 
 myServer.put("/updateOneExpense", async (req, res) => {
   try {
