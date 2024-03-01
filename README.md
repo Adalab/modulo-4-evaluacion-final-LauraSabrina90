@@ -1,6 +1,8 @@
 
 # BACKEND EXERCISE
 
+# DEADLINE: MARCH THE 1ST AT 14H00
+
 We were asked to create an API REST, starting by building  a database, and prove that we could do CRUD actions on it:
 
 -Find / show all existing documents
