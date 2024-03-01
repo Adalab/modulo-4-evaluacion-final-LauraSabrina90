@@ -19,7 +19,7 @@ myServer.listen(myPort, () => {
 });
 
 myServer.get("/getExpenses", async (req, res) => {
-  const myExpenses = await Expenses.find(req.param);
+  const myExpenses = await Expenses.find(req.params);
   res.status(200).json({ message: "Todos los gastos existentes", myExpenses });
 });
 
