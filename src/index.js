@@ -1,21 +1,16 @@
-//DEPENDENCIAS:
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const connectDb = require("../config/myConnection");
 const Expenses = require("./models/expenses.models");
 
-//ARRANCAR SERVIDOR
 const myServer = express();
 
-//CONFIGURAR SERVIDOR
 myServer.use(cors());
 myServer.use(express.json());
 
-//CONEXIÓN BD
 connectDb();
 
-//ESCUCHAR SERVIDOR
 const myPort = process.env.PORT || 3306;
 myServer.listen(myPort, () => {
   console.log(
@@ -23,12 +18,8 @@ myServer.listen(myPort, () => {
   );
 });
 
-//para los endpoints, con mongoDB hay que definir estructuras de datos por cada una de las colecciones a las que quiero acceder --> modelos
-
-//Leer/Listar todos los registros existentes.
 myServer.get("/getExpenses", async (req, res) => {
-  console.log(myExpenses);
-  const myExpenses = await Expenses.find();
+  const myExpenses = await Expenses.find(req.param);
   res.status(200).json({ message: "Todos los gastos existentes", myExpenses });
 });
 
@@ -50,15 +41,14 @@ myServer.post("/createExpense", async (req, res) => {
 
 //Leer registros filtrado por el campo de tu interés.
 
-//Actualizar un registro existente.
 myServer.put("/updateOneExpense", async (req, res) => {
   try {
-    const filter = { _id: req.body.id };
-    const updateData = req.body.updateData;
-
-    const updateExpense = await Expenses.findOneAndUpdate(filter, updateData, {
-      new: true,
-    });
+    const updateBills = req.body.bills;
+    const updateExpense = await Expenses.findByIdAndUpdate(
+      { _id: req.body._id },
+      { $set: { bills: updateBills } },
+      { new: true }
+    );
 
     if (updateExpense) {
       return res.status(200).json({
@@ -70,10 +60,10 @@ myServer.put("/updateOneExpense", async (req, res) => {
         message: "No se encontraron gastos que coincidan para actualizar",
       });
     }
-  } catch (e) {
+  } catch (error) {
     return res.status(500).json({
       message: "Error interno al actualizar los gastos",
-      e: error.message,
+      error: error.message,
     });
   }
 });
